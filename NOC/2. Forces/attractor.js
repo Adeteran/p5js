@@ -7,7 +7,7 @@ class Attractor{
 
 	display(){		
 		noStroke(0);
-		fill(190);		
+		fill(190,14,63);		
 		ellipse(this.location.x,this.location.y,this.mass, this.mass);
 	}
 

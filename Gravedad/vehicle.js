@@ -5,7 +5,7 @@ class Vehicle{
         this.acceleration = createVector();             
         
         this.masa = masa;        
-        this.maxspeed = 3;        
+        this.maxspeed = 100;        
         this.G = 0.01;
         this.col = createVector(random(100,255),random(100,255),random(100,255));
     }
@@ -19,7 +19,7 @@ class Vehicle{
 
     update(){        
         this.velocity.add(this.acceleration);
-        // this.velocity.limit(this.maxspeed);
+        this.velocity.limit(this.maxspeed);
         this.position.add(this.velocity);
 
         this.acceleration.mult(0); //reset each cycle
