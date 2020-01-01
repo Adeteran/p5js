@@ -7,12 +7,7 @@ function setup(){
 	noStroke();
 	grid = new Grid(10);
 	grid.grid_gen();
-	// frameRate(225);
 	grid.render();
-}
-
-function draw(){
-	
 }
 
 class Cuad{
@@ -38,8 +33,7 @@ class Grid{
 		this.ty = 0;		 
 	}
 
-	grid_gen(){
-		
+	grid_gen(){		
 		for(let i = 0; i < this.x; i++){
 			let col = [];
 			for(let j = 0; j < this.y; j++){
