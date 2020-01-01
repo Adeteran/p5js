@@ -3,16 +3,13 @@ let height = 720;
 
 function setup(){	
 	canvas = createCanvas(width,height);	
-	
 	a1 = new Agent();
 }
 
-function draw(){				
+function draw(){
 	background(50);
 	a1.calc();
 }
-
-
 
 class Agent{
 	constructor(){
@@ -31,11 +28,12 @@ class Agent{
 	calc(){				
 		this.edges();
 		this.position.add(this.velocity);
-		this.velocity.add(this.acceleration);				
+		this.velocity.add(this.acceleration);	
 		this.drawAgent();
 		console.log(" ");
 		console.log("Pos: " + this.position.x + ", " + this.position.y);
 		console.log("Vel: " + this.velocity.x + ", " + this.velocity.y);
+		this.acceleration.mult(0); //reset each cycle
 	}
 
 	edges(){

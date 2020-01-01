@@ -1,6 +1,6 @@
 
 let grid;
-let diametro = 30;
+let diametro = 40;
 
 function setup(){
 	noStroke();	
@@ -93,7 +93,7 @@ class Grid{
 
 	update(){		
 		this.draw(this.offX,this.offY);
-		this.offX -= 0.005;
-		this.offY += 0.005;
+		this.offX -= 0.0025;
+		this.offY += 0.0025;
 	}
 }

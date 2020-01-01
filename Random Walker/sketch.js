@@ -2,11 +2,11 @@ let width = 1280;
 let height = 720;
 let cantidad = 10;
 let paso = 20;
-let num_walkers = 5;
+let num_walkers = 1;
 let walkers = [];
 
 function setup(){
-	// frameRate(5);	
+	// frameRate(1);
 	canvas = createCanvas(width,height);
 	background(50);
 	for(let i = 0; i < num_walkers; i++){

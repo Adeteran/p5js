@@ -6,34 +6,23 @@ let att;
 
 function setup(){		
 	att = new Attractor();
-	createCanvas(width,height);
-    // createCanvas(displayWidth,displayHeight);
-    for(let i = 0; i < 3; i++){
-        group.push(new Vehicle(width/2,random(height/2),random(2,5)));
+	createCanvas(width,height);    
+    for(let i = 0; i < 20; i++){
+        group.push(new Vehicle(width/2,random(height/2),random(3,10)));
     }
-    background(50);
-    
 }
 
 function draw(){
+	background(50);
 	for(let i = 0; i < group.length; i++){    
-    
     	let m = group[i].masa;    	
     	let c = 0.1;
 
     	let force = att.attract(group[i]);
     	group[i].applyForce(force);
     	att.display();
-    	
-    	// friction = group[i].velocity.copy();
-    	// friction.mult(-1);
-    	// friction.normalize();
-    	// friction.mult(c);
-    	
-    	gravity = createVector(0,1 * m);
-    	
-    	// group[i].applyForce(gravity);
-    	// group[i].applyForce(friction);
+		gravity = createVector(0,1 * m);
+		    	
     	for(let j = 0; j < group.length; j++){
     		if(i != j){
     			let force = group[j].attract(group[i]);
@@ -43,12 +32,6 @@ function draw(){
         
         group[i].update();        
         group[i].show();
-        // group[i].checkEdges();
-
-
     }
-
-
-
     att.display();
 }

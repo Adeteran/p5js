@@ -8,16 +8,17 @@ class Vehicle{
         this.steer = createVector();
         this.target = createVector(0,height);
         this.masa = masa;
-        this.r = 10;
+        this.r = 5;
         this.maxspeed = 6;
         this.maxforce = 0.1;
-        this.G = 0.01;
+        this.G = 0.1;
     }
 
     show(){
-        strokeWeight(16);
-        stroke(255);
-        ellipse(this.position.x,this.position.y,this.r,this.r);        
+        strokeWeight(2);
+        stroke(50,0,0);
+        fill(255);
+        ellipse(this.position.x,this.position.y,this.r * this.masa ,this.r * this.masa );
     }
 
     update(){        

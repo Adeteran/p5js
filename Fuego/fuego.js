@@ -27,7 +27,9 @@ class Fuego{
         listaParticulas.push(
             new Particula(
                 createVector(this.posX,this.posY),
-                createVector(random(-0.02,0.02),random(0,-0.1))
+                createVector(random(-0.01,0.01),random(0,-0.1)),
+                255,
+                random(20,80)
             )
         );
         this.particulas();                
@@ -40,8 +42,7 @@ class Fuego{
             if(listaParticulas[i].isDead()){
                 listaParticulas.splice(i,1);
             }
-        }
-           
+        }           
     }
 
     base(){
@@ -51,11 +52,12 @@ class Fuego{
 }
 
 class Particula{
-    constructor(pos,acc){
+    constructor(pos,acc,life,diam){
         this.pos = pos;
         this.vel = createVector(0,0);
         this.acc = acc;        
-        this.lifespan = 255;
+        this.lifespan = life;
+        this.diam = diam;
     }
 
     correr(){
@@ -67,12 +69,13 @@ class Particula{
         this.vel.add(this.acc);
         this.pos.add(this.vel);
         this.lifespan -= 2.0;
+        this.diam -= 0.5;
     }
 
     display(){
         noStroke();        
         fill(120,this.lifespan);
-        ellipse(this.pos.x,this.pos.y,100,100);
+        ellipse(this.pos.x,this.pos.y,this.diam,this.diam);
     }
 
     isDead(){
