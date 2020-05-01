@@ -37,7 +37,7 @@ function draw(){
     	for(let j = 0; j < group.length; j++){
     		if(i != j){
     			let force = group[j].attract(group[i]);
-    			group[i].applyForce(force);
+				group[i].applyForce(force);				
     		}
     	}
         

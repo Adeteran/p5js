@@ -6,10 +6,19 @@ function setup(){
 	background(50);
 	noStroke();
 
-	grid = new Grid(10);
-	grid.grid_gen();
-	grid.render();
-	console.log(grid.cuad_grid[0][15]);
+	//Grid
+	// grid = new Grid(10);
+	// grid.grid_gen();
+	// grid.render();
+	// console.log(grid.cuad_grid[0][15]);
+
+	//Agent
+	agent = new Agent(grid);
+	agent.render();
+}
+
+function update(){
+
 }
 
 class Cuad{
@@ -28,8 +37,7 @@ class Cuad{
 	}
 }
 
-class Grid{	
-
+class Grid{
 	constructor(lado){
 		this.x = width/lado;
 		this.y = height/lado;
@@ -96,6 +104,18 @@ class Grid{
 			}
 			tx += 0.09;
 		}		
+	}
+}
+
+class Agent{
+	constructor(grid){
+		this.grid = grid;
+		this.gridPosX = random();
+		this.gridPosY;
+	}
+	render(){
+		fill(200,50,50);
+        rect(this.gridPosX * 20,this.gridPosY * 20,20,20);
 	}
 }
 
