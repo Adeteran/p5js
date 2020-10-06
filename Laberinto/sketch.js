@@ -4,7 +4,7 @@ let height = 600;
 function setup(){	
 	canvas = createCanvas(width,height);	
 	background(190);
-	grid = new Grid(40);
+	grid = new Grid(30);
 	grid.grid_gen();
 	grid.margenGeneral();	
 	grid.laberinto(3,3);
@@ -72,8 +72,7 @@ class Grid{
 		this.cuad_grid = [];
 		this.inicio = [];
 		this.fin = [];
-		this.stack = [];
-		
+		this.stack = [];		
 	}
 
 	grid_gen(){		
@@ -163,21 +162,22 @@ class Grid{
 	}
 
 	inicio_fin(){
-		let ix = parseInt(random(5));
-		let iy = parseInt(random(5));
-		let fx = parseInt(random(this.x - 5,this.x));
-		let fy = parseInt(random(this.y - 5,this.y));
+		let ix = parseInt(random(2));
+		let iy = parseInt(random(2));
+		let fx = parseInt(random(this.x - 2,this.x));
+		let fy = parseInt(random(this.y - 2,this.y));
 		this.inicio = [ix,iy];
 		this.stack.push(this.cuad_grid[this.inicio[0]][this.inicio[1]]);
 		this.fin = [fx,fy];
 		this.cuad_grid[ix][iy].inicio();
 		this.cuad_grid[fx][fy].fin();
 
-		// this.solucion(this.inicio[0],this.inicio[1]);
-		// this.renderSolucion();
+		// this.solucion_error(this.inicio[0],this.inicio[1]);
+		this.solucion();
+		this.renderSolucion();
 	}
 
-	solucion(cx,cy){
+	solucion_error(cx,cy){
 		this.cuad_grid[cx][cy].toggleSolucion();		
 		let nx,ny;
 		let end = false;
@@ -232,12 +232,11 @@ class Grid{
 					end = true;
 				}
 				if(!end){
-					this.solucion(nx,ny);
+					this.solucion_error(nx,ny);
 				}				
 			}
 		}
 	}
-
 
 	renderSolucion(){
 		console.log(this.stack);
