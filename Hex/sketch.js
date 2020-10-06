@@ -23,7 +23,7 @@ class Hex {
 		this.centerY = posY;
 	}
 
-	draw(col){		
+	draw(col){
 		fill(col);
 		push();
 		
