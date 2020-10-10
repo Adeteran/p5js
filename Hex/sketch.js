@@ -35,7 +35,6 @@ class Hex {
 		vertex(-this.diam,0);
 		vertex(-this.diam/2,-(sin(60) * this.diam));
 		vertex(this.diam/2,-(sin(60) * this.diam));
-		vertex(this.diam,0);	
 		endShape();
 
 		pop();

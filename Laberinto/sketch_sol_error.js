@@ -4,7 +4,7 @@ let height = 600;
 function setup(){	
 	canvas = createCanvas(width,height);	
 	background(190);
-	grid = new Grid(60);
+	grid = new Grid(30);
 	grid.grid_gen();
 	grid.margenGeneral();	
 	grid.laberinto(3,3);
@@ -31,9 +31,6 @@ class Cuad{
 		}
 		if(this.s){
 			line(this.x,this.y + this.lado,this.x + this.lado,this.y + this.lado); //S
-		}
-		if(this.resuelto){
-			rect(this.x + this.lado,this.y + this.lado,5,5);
 		}
 	}
 
@@ -75,13 +72,7 @@ class Grid{
 		this.cuad_grid = [];
 		this.inicio = [];
 		this.fin = [];
-		this.stack = [];
-		this.listaSolucion = [];
-		this.ix;
-		this.iy; 
-		this.fx;
-		this.fy;
-		
+		this.stack = [];		
 	}
 
 	grid_gen(){		
@@ -171,45 +162,35 @@ class Grid{
 	}
 
 	inicio_fin(){
-		this.ix = parseInt(random(2));
-		this.iy = parseInt(random(2));
-		this.fx = parseInt(random(this.x - 2,this.x));
-		this.fy = parseInt(random(this.y - 2,this.y));
-		this.inicio = [this.ix,this.iy];
-		this.stack.push(this.cuad_grid[this.inicio[0]][this.inicio[1]]);		
-		this.fin = [this.fx,this.fy];
-		this.cuad_grid[this.ix][this.iy].inicio();
-		this.cuad_grid[this.fx][this.fy].fin();
+		let ix = parseInt(random(2));
+		let iy = parseInt(random(2));
+		let fx = parseInt(random(this.x - 2,this.x));
+		let fy = parseInt(random(this.y - 2,this.y));
+		this.inicio = [ix,iy];
+		this.stack.push(this.cuad_grid[this.inicio[0]][this.inicio[1]]);
+		this.fin = [fx,fy];
+		this.cuad_grid[ix][iy].inicio();
+		this.cuad_grid[fx][fy].fin();
 
-		this.solucion(this.ix,this.iy);
+		this.solucion(this.inicio[0],this.inicio[1]);		
 		this.renderSolucion();
 	}
 
 	solucion(cx,cy){
-		// console.log("(" + cx + "," + cy + ") | (" + this.fx + "," + this.fy + ")");
-
-		if(cx == this.fx && cy == this.fy){
-			console.log("Fin");
-			return true;
-		}
-
-		if(this.cuad_grid[cx][cy].resuelto == true){
-			return false;
-		}
-
-		this.cuad_grid[cx][cy].toggleSolucion;
-
-		let nx,ny;		
-		let dir = ["N","E","S","O"];		
-		for(let i = 0; i < dir.length; i++){			
-
+		this.cuad_grid[cx][cy].toggleSolucion();		
+		let nx,ny;
+		let end = false;
+		
+		let dir = ["N","E","S","O"];
+		shuffle(dir,true);
+		for(let i = 0; i < dir.length; i++){
 			if(dir[i] == "N"){
 				nx = cx;
 				ny = cy - 1;
 			}
 			if(dir[i] == "E"){
 				nx = cx + 1;
-				ny = cy;
+				ny = cy;			
 			}
 			if(dir[i] == "S"){
 				nx = cx;
@@ -219,95 +200,49 @@ class Grid{
 				nx = cx - 1;
 				ny = cy;
 			}
-			if(nx >= 0 && nx < this.x && ny >= 0 && ny < this.y){
-				if(this.solucion(nx, ny)){
-					this.listaSolucion.push(this.cuad_grid[cx][cy]);
-					return true;
-				}			
-					
-				if(this.solucion(nx, ny)){
-					this.listaSolucion.push(this.cuad_grid[cx][cy]);
-					return true;				
-				}	
-				
-				if(this.solucion(nx, ny)){
-					this.listaSolucion.push(this.cuad_grid[cx][cy]);
-					return true;
+			if(nx >= 0 && nx < this.x && ny >= 0 && ny < this.y && this.cuad_grid[nx][ny].resuelto == false){
+				this.stack.push(this.cuad_grid[nx][ny]);
+				if(dir[i] == "N"){					
+					if(this.cuad_grid[nx][ny].s == true){
+						console.log("pop");
+						this.stack.pop();
+					}
 				}
-				
-				if(this.solucion(cx, ny)){
-					this.listaSolucion.push(this.cuad_grid[cx][cy]);
-					return true;
-				}			
+				if(dir[i] == "E"){
+					if(this.cuad_grid[cx][cy].e == true){
+						console.log("pop");
+						this.stack.pop();
+					}
+				}
+				if(dir[i] == "S"){
+					if(this.cuad_grid[cx][cy].s == true){
+						console.log("pop");
+						this.stack.pop();
+					}
+				}		
+				if(dir[i] == "O"){
+					if(this.cuad_grid[nx][ny].e == true){
+						console.log("pop");
+						this.stack.pop();
+					}
+				}
+				if(nx == this.fin[0] && ny == this.fin[1]){
+					console.log("End " + nx + " | " + ny);
+					end = true;
+				}
+				if(!end){
+					this.solucion(nx,ny);
+				}				
 			}
-			return false;
 		}
-		
-		
-		
-		// let nx,ny;		
-		// let dir = ["N","E","S","O"];
-		// // shuffle(dir,true);
-		// for(let i = 0; i < dir.length; i++){			
-
-		// 	if(dir[i] == "N"){
-		// 		nx = cx;
-		// 		ny = cy - 1;
-		// 	}
-		// 	if(dir[i] == "E"){
-		// 		nx = cx + 1;
-		// 		ny = cy;
-		// 	}
-		// 	if(dir[i] == "S"){
-		// 		nx = cx;
-		// 		ny = cy + 1;
-		// 	}
-		// 	if(dir[i] == "O"){
-		// 		nx = cx - 1;
-		// 		ny = cy;
-		// 	}
-			
-		// 	if(nx >= 0 && nx < this.x && ny >= 0 && ny < this.y && this.cuad_grid[nx][ny].resuelto === false){
-		// 		if(dir[i] == "N"){					
-		// 			if(this.cuad_grid[nx][ny].s === false){					
-		// 				this.stack.push(this.cuad_grid[nx][ny]);
-		// 			}else{
-		// 				this.stack.pop();
-		// 			}					
-		// 		}
-		// 		if(dir[i] == "E"){
-		// 			if(this.cuad_grid[cx][cy].e === false){
-		// 				this.stack.push(this.cuad_grid[nx][ny]);
-		// 			}else{
-		// 				this.stack.pop();
-		// 			}
-		// 		}
-		// 		if(dir[i] == "S"){					
-		// 			if(this.cuad_grid[cx][cy].s === false){
-		// 				this.stack.push(this.cuad_grid[nx][ny]);
-		// 			}else{
-		// 				this.stack.pop();
-		// 			}
-		// 		}
-		// 		if(dir[i] == "O"){
-		// 			if(this.cuad_grid[nx][ny].e === false){
-		// 				this.stack.push(this.cuad_grid[nx][ny]);
-		// 			}else{
-		// 				this.stack.pop();
-		// 			}
-		// 		}
-		// 		return false;
-		// 		// this.solucion(nx,ny);
-		// 	}
-		// }
 	}
 
 	renderSolucion(){
-		console.log(this.listaSolucion);
-		for(let i = 1; i < this.listaSolucion.length; i++){
+		console.log(this.stack);
+		for(let i = 1; i < this.stack.length; i++){
 			strokeWeight(4);
 			stroke(200,40,40);			
-			line(this.listaSolucion[i].x + this.lado/2,this.listaSolucion[i].y + this.lado/2,this.listaSolucion[i - 1].x + this.lado/2,this.listaSolucion[i - 1].y + this.lado/2);
-		}		
+			line(this.stack[i].x + this.lado/2,this.stack[i].y + this.lado/2,this.stack[i - 1].x + this.lado/2,this.stack[i - 1].y + this.lado/2);
+		}
 	}
 }

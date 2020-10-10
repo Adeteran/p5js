@@ -2,7 +2,7 @@
 // let height = screen.height;
 let width = 1560;
 let height = 740;
-let cantidad = 12;
+let cantidad = 24;
 let velocidad = 1;
 
 

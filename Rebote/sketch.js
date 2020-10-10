@@ -1,9 +1,9 @@
 let width = 1280;
 let height = 720;
-let cantidad = 1;
+let cantidad = 40;
 let agents = [];
 
-function setup(){	
+function setup(){
 	canvas = createCanvas(width,height);
 	for(let i = 0; i < cantidad; i++){
 		agents.push(new Agent());	
@@ -20,8 +20,9 @@ function draw(){
 class Agent{
 	constructor(){
 		this.diam = 50;
-		this.position = createVector(random(width) + (this.diam/2),random(height) + (this.diam/2));		
-		this.velocity = p5.Vector.random2D();
+		this.factVel = 3;
+		this.position = createVector(random(width) + (this.diam/2),random(height - this.diam) + this.diam/2);		
+		this.velocity = p5.Vector.random2D().mult(random(this.factVel));		
 		this.acceleration = p5.Vector.random2D();
 	}
 
@@ -44,7 +45,7 @@ class Agent{
 
 	edges(){
 		if(this.position.x + (this.diam/2) >= width){
-			this.velocity.x = -1;
+			this.velocity.x *= -1;
 		}
 		if(this.position.x - (this.diam/2) <= 0){
 			this.velocity.x *= -1;
@@ -58,8 +59,14 @@ class Agent{
 		}
 	}
 
-	color(){
-		console.log(this.velocity);
+	color(){		
+		let lento = color(4, 48, 17);
+		let rapido = color(20, 199, 73);
+
+		let vel = this.velocity.mag().toFixed(2)
+		let factor = map(vel,0,this.factVel,0,1);
+		
+		fill(lerpColor(lento,rapido,factor));
 	}
 
 	collision(){
