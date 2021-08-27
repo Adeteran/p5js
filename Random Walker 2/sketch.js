@@ -29,7 +29,6 @@ class Walker{
 	}
 
 	drawWalker(x,y){
-
 		noStroke();
 		fill(this.col.x,this.col.y,this.col.z);
 		rect(x,y,this.diam,this.diam);

@@ -4,11 +4,11 @@ let height = 720;
 let gravity, friction;
 let att;
 
-function setup(){
+function setup(){	
 	att = new Attractor();
 	createCanvas(width,height);    
-    for(let i = 0; i < 20; i++){
-        group.push(new Vehicle(width/2,random(height/2),random(3,10)));
+    for(let i = 0; i < 10; i++){
+        group.push(new Vehicle(random(width),random(height),random(3,10)));
     }
 }
 

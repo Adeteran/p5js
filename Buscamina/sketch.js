@@ -4,7 +4,7 @@ let height = 600;
 function setup(){	
 	canvas = createCanvas(width,height);	
 	background(190);
-	grid = new Grid(20);
+	grid = new Grid(60);
 	grid.grid_gen();
 	grid.margenGeneral();	
 	grid.laberinto(3,3);
@@ -80,7 +80,8 @@ class Grid{
 		this.ix;
 		this.iy; 
 		this.fx;
-		this.fy;		
+		this.fy;
+		
 	}
 
 	grid_gen(){		
@@ -185,7 +186,7 @@ class Grid{
 	}
 
 	solucion(cx,cy){
-		//console.log("(" + cx + "," + cy + ") | (" + this.fx + "," + this.fy + ")");
+		// console.log("(" + cx + "," + cy + ") | (" + this.fx + "," + this.fy + ")");
 
 		if(cx == this.fx && cy == this.fy){
 			console.log("Fin");
@@ -198,9 +199,9 @@ class Grid{
 
 		this.cuad_grid[cx][cy].toggleSolucion;
 
-		let nx,ny;
-		let dir = ["N","E","S","O"];
-		for(let i = 0; i < dir.length; i++){
+		let nx,ny;		
+		let dir = ["N","E","S","O"];		
+		for(let i = 0; i < dir.length; i++){			
 
 			if(dir[i] == "N"){
 				nx = cx;
@@ -218,17 +219,16 @@ class Grid{
 				nx = cx - 1;
 				ny = cy;
 			}
-
 			if(nx >= 0 && nx < this.x && ny >= 0 && ny < this.y){
 				if(this.solucion(nx, ny)){
 					this.listaSolucion.push(this.cuad_grid[cx][cy]);
 					return true;
-				}
+				}			
 					
 				if(this.solucion(nx, ny)){
 					this.listaSolucion.push(this.cuad_grid[cx][cy]);
-					return true;
-				}
+					return true;				
+				}	
 				
 				if(this.solucion(nx, ny)){
 					this.listaSolucion.push(this.cuad_grid[cx][cy]);
@@ -238,7 +238,7 @@ class Grid{
 				if(this.solucion(cx, ny)){
 					this.listaSolucion.push(this.cuad_grid[cx][cy]);
 					return true;
-				}
+				}			
 			}
 			return false;
 		}

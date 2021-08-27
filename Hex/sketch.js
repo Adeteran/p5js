@@ -4,10 +4,8 @@ let diametro = 40;
 
 function setup(){
 	noStroke();	
-	angleMode(DEGREES);
-	background(50);
-	canvas = createCanvas(displayWidth,displayHeight);
-	
+	angleMode(DEGREES);	
+	canvas = createCanvas(displayWidth,displayHeight);	
 	grid = new Grid(windowWidth,windowHeight,diametro);	
 	grid.gen();	
 }
@@ -67,7 +65,7 @@ class Grid{
 				}else{
 					hex = new Hex(this.diam,
 						i * this.diam * 1.5,
-						j * 2 *(this.diam*sin(60))+ this.diam - (this.diam - (this.diam * sin(60))));					
+						j * 2 *(this.diam*sin(60))+ this.diam - (this.diam - (this.diam * sin(60))));
 				}
 				col.push(hex);				
 			}
@@ -92,7 +90,11 @@ class Grid{
 
 	update(){		
 		this.draw(this.offX,this.offY);
-		this.offX -= 0.0025;
-		this.offY += 0.0025;
+		this.offX -= 0.0015;
+		this.offY += 0.0015;
+	}	
+
+	lineas(){
+		
 	}
 }

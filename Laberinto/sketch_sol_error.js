@@ -4,7 +4,7 @@ let height = 600;
 function setup(){	
 	canvas = createCanvas(width,height);	
 	background(190);
-	grid = new Grid(30);
+	grid = new Grid(20);
 	grid.grid_gen();
 	grid.margenGeneral();	
 	grid.laberinto(3,3);
@@ -21,6 +21,7 @@ class Cuad{
 		this.s = true;
 		this.visitado = false;
 		this.resuelto = false;
+		this.color = false;
 	}
 
 	display(){
@@ -31,6 +32,10 @@ class Cuad{
 		}
 		if(this.s){
 			line(this.x,this.y + this.lado,this.x + this.lado,this.y + this.lado); //S
+		}
+		if(this.resuelto){
+			fill(200,40,20);
+			ellipse(this.x + this.lado/2,this.y + this.lado/2,this.lado/4);
 		}
 	}
 
@@ -48,6 +53,10 @@ class Cuad{
 
 	toggleSolucion(){
 		this.resuelto = !this.resuelto;
+	}
+
+	color_on(){
+		this.color = true;
 	}
 
 	inicio(){
@@ -201,47 +210,67 @@ class Grid{
 				ny = cy;
 			}
 			if(nx >= 0 && nx < this.x && ny >= 0 && ny < this.y && this.cuad_grid[nx][ny].resuelto == false){
-				this.stack.push(this.cuad_grid[nx][ny]);
+				this.stack.push(this.cuad_grid[nx][ny]);				
 				if(dir[i] == "N"){					
 					if(this.cuad_grid[nx][ny].s == true){
-						console.log("pop");
+						// console.log("pop");
+						// this.cuad_grid[nx][ny].toggleSolucion();
 						this.stack.pop();
 					}
 				}
 				if(dir[i] == "E"){
 					if(this.cuad_grid[cx][cy].e == true){
-						console.log("pop");
+						// this.cuad_grid[nx][ny].toggleSolucion();
+						// console.log("pop");
 						this.stack.pop();
 					}
 				}
 				if(dir[i] == "S"){
 					if(this.cuad_grid[cx][cy].s == true){
-						console.log("pop");
+						// this.cuad_grid[nx][ny].toggleSolucion();
+						// console.log("pop");
 						this.stack.pop();
 					}
 				}		
 				if(dir[i] == "O"){
 					if(this.cuad_grid[nx][ny].e == true){
-						console.log("pop");
+						// this.cuad_grid[nx][ny].toggleSolucion();
+						// console.log("pop");
 						this.stack.pop();
 					}
 				}
+				this.stack[this.stack.length-1].display();
+
 				if(nx == this.fin[0] && ny == this.fin[1]){
-					console.log("End " + nx + " | " + ny);
+					// console.log("End " + nx + " | " + ny);
 					end = true;
+					return true;
 				}
-				if(!end){
-					this.solucion(nx,ny);
-				}				
+				
+				if(!end){					
+					this.solucion(nx,ny);						
+				}else{
+					return;
+				}
 			}
 		}
 	}
+
+	// solucion(cx,cy){
+	// 	if(nx == this.fin[0] && ny == this.fin[1]){
+	// 		return true;
+	// 	}
+
+	// 	if(this.grid[cx][cy] || ){
+	// 		return false;
+	// 	}
+	// }
 
 	renderSolucion(){
 		console.log(this.stack);
 		for(let i = 1; i < this.stack.length; i++){
 			strokeWeight(4);
-			stroke(200,40,40);			
+			stroke(200,40,40);
 			line(this.stack[i].x + this.lado/2,this.stack[i].y + this.lado/2,this.stack[i - 1].x + this.lado/2,this.stack[i - 1].y + this.lado/2);
 		}
 	}

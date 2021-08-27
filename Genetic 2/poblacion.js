@@ -1,28 +1,35 @@
-class Population {
-    constructor(p, m, num) {
+class Poblacion {
+    constructor(m, num, grid) {
   
       this.population; // Array to hold the current population
       this.matingPool; // ArrayList which we will use for our "mating pool"
       this.generations = 0; // Number of generations
       this.finished = false; // Are we finished evolving?
-      this.target = p; // Target phrase
+      this.target = new createVector(80,30); // Target
+      this.origin = new createVector(5,20); // Origin
       this.mutationRate = m; // Mutation rate
-      this.perfectScore = 1;
-  
-      this.best = "";
+      this.perfectScore = 0;
+      this.grid = grid;      
   
       this.population = [];
+
       for (let i = 0; i < num; i++) {
-        this.population[i] = new DNA(this.target.length);
+        this.population[i] = new DNA(this.grid,this.origin,this.target);
       }
       this.matingPool = [];
-      this.calcFitness();
+      // this.calcFitness();
     }
   
     // Fill our fitness array with a value for every member of the population
     calcFitness() {
       for (let i = 0; i < this.population.length; i++) {
-        this.population[i].calcFitness(target);
+        this.population[i].calcFitness(this.origin,this.target);
+      }
+    }
+
+    display(){
+      for(let i = 0; i < this.population.length; i++){
+        this.population[i].display();
       }
     }
   

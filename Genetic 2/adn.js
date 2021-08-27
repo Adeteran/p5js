@@ -1,35 +1,35 @@
-function newChar() {
-    let c = floor(random(63, 122));
-    if (c === 63) c = 32;
-    if (c === 64) c = 46;
-  
-    return String.fromCharCode(c);
-  }
 
 class DNA{
-    constructor(num) {
+    constructor(grid,origin,target) {
         // The genetic sequence
+        this.origin = origin;
+        this.target = target;
+        this.grid = grid;
         this.genes = [];
         this.fitness = 0;
-        for (let i = 0; i < num; i++) {
-            this.genes[i] = newChar(); // Pick from range of chars
-        }
+
+        for(let i = 0; i < 100; i++){
+            let num = parseInt(random(1,5));
+            this.genes[i] = num;
+        }        
+        console.log(this.origin.y);
+        this.agente = new Agente(this.grid,this.origin.x,this.origin.y,"Green",this.genes);
     }
 
-    // Converts character array to a String
-    getPhrase() {
-        return this.genes.join("");
+    display(){
+        this.agente.display();
     }
 
     // Fitness function (returns floating point % of "correct" characters)
     calcFitness(target) {
-        let score = 0;
-        for (let i = 0; i < this.genes.length; i++) {
-            if (this.genes[i] == target.charAt(i)) {
-            score++;
-            }
-        }
-        this.fitness = score / target.length;
+        // let pos = this.grid.get_cuad(px,py);
+        // let score = 0;
+        // for (let i = 0; i < this.genes.length; i++) {
+        //     if (this.genes[i] == target.charAt(i)) {
+        //     score++;
+        //     }
+        // }
+        // this.fitness = score / target.length;
     }
 
     // Crossover
@@ -51,7 +51,7 @@ class DNA{
     mutate(mutationRate) {
         for (let i = 0; i < this.genes.length; i++) {
             if (random(1) < mutationRate) {
-            this.genes[i] = newChar();
+            this.genes[i] = parseInt(random(1,5));
             }
         }
     }

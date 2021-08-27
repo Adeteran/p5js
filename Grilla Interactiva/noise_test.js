@@ -2,11 +2,16 @@ let cuad;
 let off = 0.2;
 
 function setup(){
-	createCanvas(1280, 720);
+	createCanvas(1200, 600);
 	background(50);
-	noStroke();
-	grid = new Grid(10);
+	
+	// noStroke();
+	grid = new Grid(20);
 	grid.grid_gen();
+	grid.borde();	
+}
+
+function draw(){
 	grid.render();
 }
 
@@ -15,22 +20,35 @@ class Cuad{
 		this.x = x;
 		this.y = y;
 		this.lado = lado;
+		this.muro = false;
 	}
-	display(col){		
-		fill(col);
+
+	display(){
+		if(this.muro){
+			fill("#555");
+		}else{
+			fill("#fff");
+		}
+		
+		stroke("#ccc");
 		rect(this.x,this.y,this.lado,this.lado);
+	}
+
+	esMuro(){
+		return this.muro;
+	}
+
+	toggleMuro(){
+		this.muro = !this.muro;
 	}
 }
 
 class Grid{	
-
 	constructor(lado){
 		this.x = width/lado;
 		this.y = height/lado;
 		this.lado = lado;
-		this.cuad_grid = [];
-		this.tx = 0;
-		this.ty = 0;		 
+		this.cuad_grid = [];		 
 	}
 
 	grid_gen(){		
@@ -43,30 +61,22 @@ class Grid{
 		}
 	}
 
-	render(){
-		let tx = 0;
-		for(let i = 0; i < this.x; i++) {
-			let ty = 0;
-			for(let j = 0 ; j < this.y; j++){
-				let noiseValue = noise(tx,ty) * 255;
-				if(noiseValue < 90){
-					let c = 'hsl(205,100%, '+ noiseValue +'%)';							
-					noiseValue = c;
-				}
-				if(noiseValue > 90 && noiseValue < 110){
-					let c = 'hsl(48,70%,73%)';							
-					noiseValue = c;
-				}
-				if(noiseValue > 110 && noiseValue < 160){
-					let c = 'hsl(106,80%,30%)';							
-					noiseValue = c;
-				}
-				this.cuad_grid[i][j].display(noiseValue);
-				ty += 0.1;				
-			}
-			tx += 0.1;
-		}		
+	borde(){
+		for(let i = 0; i < this.x; i++){
+			this.cuad_grid[i][0].toggleMuro();
+			this.cuad_grid[i][this.y - 1].toggleMuro();
+		}
+		for(let i = 1; i < this.y - 1; i++){
+			this.cuad_grid[0][i].toggleMuro();
+			this.cuad_grid[this.x - 1][i].toggleMuro();
+		}
 	}
 
+	render(){		
+		for(let i = 0; i < this.x; i++) {			
+			for(let j = 0 ; j < this.y; j++){
+				this.cuad_grid[i][j].display();				
+			}
+		}		
+	}
 }
-
