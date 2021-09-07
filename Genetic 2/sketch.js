@@ -10,7 +10,7 @@ Etapas.
 		1. Cruza
 		2. Mutación
 	b. Agregar a nueva población.
-4. Nueva población a etapa 1.
+4. Nueva población a etapa 1 reemplazando información al azar por la de la generación anterior.
 
 */
 
