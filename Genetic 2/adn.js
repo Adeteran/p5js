@@ -1,6 +1,6 @@
 
-class DNA{
-    constructor(grid,origin,target) {
+class DNA {
+    constructor(grid, origin, target) {
         // The genetic sequence
         this.origin = origin;
         this.target = target;
@@ -8,15 +8,15 @@ class DNA{
         this.genes = [];
         this.fitness = 0;
 
-        for(let i = 0; i < 100; i++){
-            let num = parseInt(random(1,5));
+        for (let i = 0; i < 100; i++) {
+            let num = parseInt(random(1, 5));
             this.genes[i] = num;
-        }        
+        }
         console.log(this.origin.y);
-        this.agente = new Agente(this.grid,this.origin.x,this.origin.y,"Green",this.genes);
+        this.agente = new Agente(this.grid, this.origin.x, this.origin.y, "Green", this.genes);
     }
 
-    display(){
+    display() {
         this.agente.display();
     }
 
@@ -51,7 +51,7 @@ class DNA{
     mutate(mutationRate) {
         for (let i = 0; i < this.genes.length; i++) {
             if (random(1) < mutationRate) {
-            this.genes[i] = parseInt(random(1,5));
+                this.genes[i] = parseInt(random(1, 5));
             }
         }
     }
