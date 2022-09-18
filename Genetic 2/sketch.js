@@ -29,10 +29,10 @@ let grid;
 function setup() {
     canvas = createCanvas(width, height);
 
-    popmax = 20;
+    pobmax = 1;
     mutationRate = 0.01;
     grid = new Grid(20);
-    pob = new Poblacion(mutationRate, popmax, grid);
+    pob = new Poblacion(mutationRate, pobmax, grid);
 
     // for(let i = 0; i < popmax; i++){
     //   agentes[i] = new Agente(grid,40,20,color(random(255), random(204), random(255)));

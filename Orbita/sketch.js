@@ -7,7 +7,7 @@ let att;
 function setup(){
 	att = new Attractor();
 	createCanvas(width,height);    
-    for(let i = 0; i < 20; i++){
+    for(let i = 0; i < 80; i++){
         group.push(new Vehicle(width/2,random(height/2),random(3,10)));
     }
 }

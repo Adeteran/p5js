@@ -181,6 +181,7 @@ class Grid{
 		this.cuad_grid[this.fx][this.fy].fin();
 
 		this.solucion(this.ix,this.iy);
+		
 		this.renderSolucion();
 	}
 

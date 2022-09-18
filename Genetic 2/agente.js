@@ -4,7 +4,12 @@ class Agente{
         this.pos = createVector(posX,posY);
         this.grid = grid        
         this.col = col
-        this.tick = 0;        
+        this.tick = 0;
+        this.complete = false;
+    }
+
+    get_complete(){
+        return this.complete;
     }
 
     display(){
@@ -39,9 +44,15 @@ class Agente{
             this.pos.y = py;
             if(this.tick < this.gen.length){
                 this.tick++;
+            }else{
+                this.complete = true;
             }
         }else{
             return;
         }
+    }
+
+    get_pos(){
+        return this.pos;
     }
 }
